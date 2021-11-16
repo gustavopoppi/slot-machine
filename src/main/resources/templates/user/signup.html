@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head th:replace="~{base :: head('Sign Up')}">
+    <title>Sign Up</title>
+</head>
+<body>
+
+    <div th:replace="~{base :: logo}"></div>
+
+    <div class="container" style="width: 50%;">
+        <div class="card">
+            <div class="card-body mt-5 border border-dark rounded-2">
+
+                <form class="row g-3" th:action="@{/user/signup}" th:object="${userDto}" method="POST">
+                    <div class="col-md-6">
+                        <label for="name" class="form-label">Name</label>
+                        <input th:field="*{name}" th:errorclass="is-invalid" class="form-control" placeholder="User name"/>
+                        <div class="invalid-feedback" th:errors="*{name}"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="password" class="form-label">Password</label>
+                        <input th:field="*{password}" th:errorclass="is-invalid" type="password" class="form-control" placeholder="User password">
+                        <div class="invalid-feedback" th:errors="*{password}"></div>
+                    </div>
+                    
+                    <!--<div class="col-12">
+                        <label for="inputAddress" class="form-label">Address</label>
+                        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                    </div>
+                    <div class="col-12">
+                        <label for="inputAddress2" class="form-label">Address 2</label>
+                        <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputCity" class="form-label">City</label>
+                        <input type="text" class="form-control" id="inputCity">
+                    </div>-->
+
+                    <!-- <div class="col-md-4">
+                        <label for="inputRole" class="form-label">State</label>
+                        <select id="inputRole" class="form-select">
+                            <option selected>Choose role...</option>
+                            <option>PLAYER</option>
+                        </select>
+                    </div> -->
+                                
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
