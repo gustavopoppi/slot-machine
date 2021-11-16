@@ -17,8 +17,6 @@ public class HomeController {
 
 	@GetMapping
 	public String home(Model model, Principal principal) {
-		Sort sort = Sort.by("dataDaEntrega").descending();
-		PageRequest paginacao = PageRequest.of(0, 10, sort);
 
 		return "home";
 	}
