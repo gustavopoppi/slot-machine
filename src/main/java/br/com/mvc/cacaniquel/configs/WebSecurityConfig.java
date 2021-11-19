@@ -1,4 +1,4 @@
-package br.com.mvc.cacaniquel;
+package br.com.mvc.cacaniquel.configs;
 
 import javax.sql.DataSource;
 
@@ -44,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
 //		UserDetails user =
-//				User.builder()
+//				UserSignUp.builder()
 //						.username("maria")
 //						.password(encoder.encode("maria"))
 //						//.roles("ADM")
