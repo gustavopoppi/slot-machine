@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.mvc.cacaniquel.dto.UserDto;
+import br.com.mvc.cacaniquel.model.Credit;
+import br.com.mvc.cacaniquel.register.CreditSignUp;
+import br.com.mvc.cacaniquel.register.UserSignUp;
+import br.com.mvc.cacaniquel.repository.CreditRepository;
 import br.com.mvc.cacaniquel.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,7 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.security.core.userdetails.User;
+
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -27,6 +31,9 @@ public class UserController {
 	UserRepository userRepository;
 
 	@Autowired
+	CreditRepository creditRepository;
+
+	@Autowired
 	JdbcUserDetailsManager jdbcUserDetailsManager;
 
 	@GetMapping("form")
@@ -34,6 +41,7 @@ public class UserController {
 		model.addAttribute("userDto", new UserDto());
 
 		return "user/signup";
+		//TODO GUSTAVO dar uma pesquisada que provávelmente esse método da p retornar um ModelAndView()
 //		return ModelAndView()
 	}
 
@@ -44,15 +52,10 @@ public class UserController {
 			return"/user/signup";
 
 		//TODO GUSTAVO lógica de adicionar um novo usuário
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		new UserSignUp().newOne(userDto, jdbcUserDetailsManager);
+		new CreditSignUp().newOne(userDto, creditRepository, userRepository);
 
-		List<GrantedAuthority> authorities = new ArrayList<>();
-		authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-
-		User user = new User(userDto.getName(), encoder.encode(userDto.getPassword()), authorities);
-
-		jdbcUserDetailsManager.createUser(user);
-
+		//TODO GUSTAVO da para implementar caso tudo funcione vá para uma página "Cadastro realizado" e depois para home;
 
 		return "/home";
 	}
