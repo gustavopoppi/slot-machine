@@ -1,4 +1,4 @@
-package br.com.mvc.cacaniquel.configs;
+package br.com.mvc.cacaniquel;
 
 import javax.sql.DataSource;
 
