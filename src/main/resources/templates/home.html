@@ -3,11 +3,21 @@
 	<body>
 		<div th:replace="~{base :: logo}"></div>
 	
-		<div class="container">
-			<div th:replace="~{base :: titulo('Últimos Pedidos')}"></div>
-							
-			<div class="card mb-3">
-				<div class="card-header alert-dark">Nome do produto</div>			
+		<div class="m-5">						
+			<!-- TODO GUSTAVO colocar esses class no css e style também o que der. -->
+			<div class="card mb-3" style="height: 78.45vh; margin: auto; width: 70%; border: solid 1px black;">	
+				<div class="m-5">
+					<div class="flex float-start border border-dark p-3 text-center" style="width:8em">inicio</div>
+					<div class="flex float-end border border-dark p-3 text-center" style="width:8em">final</div>
+				</div>
+
+
+				<!-- //TODO GUSTAVO colocar no css #nomeId ou .nomeClass > div consigo pegar todas dentro dela e não ficar copiando tudo para cada uma -->
+				<div class="d-flex justify-content-evenly ">
+					<div class="col-4 text-center border border-dark" style="padding: 18px; margin: 80px auto 40px auto; height: 10em;width: 10em;">R$ 10</div>
+					<div class="col-4 text-center border border-dark" style="padding: 18px; margin: 80px auto 40px auto; height: 10em;width: 10em;">R$ 10</div>
+					<div class="col-4 text-center border border-dark" style="padding: 18px; margin: 80px auto 40px auto; height: 10em;width: 10em;">R$ 10</div>
+				</div>
 			</div>
 		</div>
 	</body>
