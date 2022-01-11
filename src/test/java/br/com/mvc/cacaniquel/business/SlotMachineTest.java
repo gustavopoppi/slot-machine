@@ -34,4 +34,13 @@ public class SlotMachineTest {
         Throwable exception = assertThrows(RuntimeException.class, () -> slotMachine.bet(1000.00, 1));
         assertEquals("Insufficient funds in you balance", exception.getMessage());
     }
+
+    @Test
+    public void totalBetAmountLesserThenMinimumAllowed(){
+        Credit credit = CreditSupport.newCredit(UserSupport.newUser());
+        SlotMachine slotMachine = new SlotMachine(credit);
+
+        Throwable exception = assertThrows(RuntimeException.class, () -> slotMachine.bet(0.5, 1));
+        assertEquals("Minimum bet is 1.0 dollar", exception.getMessage());
+    }
 }

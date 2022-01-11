@@ -4,6 +4,7 @@ import br.com.mvc.cacaniquel.model.Credit;
 
 public class SlotMachine extends Bet {
 
+    final double MINIMUM_BET = 1.00;
 
     public SlotMachine(Credit credit) {
         super(credit);
@@ -11,24 +12,25 @@ public class SlotMachine extends Bet {
 
     @Override
     public void bet(double valueBet, int multiplier) {
-        if (!validateBet(this.getCredit(), valueBet, multiplier))
-            throw new RuntimeException("Insufficient funds in you balance");
+        validateBet(this.getCredit(), valueBet, multiplier);
 
         this.setValueBet(valueBet);
         this.setMultiplier(multiplier);
     }
 
     @Override
-    public void verifyIfWon(Bet bet) {
-
-    }
+    public void verifyIfWon(Bet bet) {}
 
     @Override
-    public boolean validateBet(Credit credit, double valueBet, int multiplier) {
+    public void validateBet(Credit credit, double valueBet, int multiplier) {
         final double totalBetAmount = valueBet * multiplier;
         final double totalCreditUser = credit.getCreditValue();
 
-        return totalCreditUser >= totalBetAmount;
+        if (!haveCredit(totalBetAmount, totalCreditUser))
+            throw new RuntimeException("Insufficient funds in you balance");
+
+        if (!totalBetAmountGreaterOrEqualThenMinimum(totalBetAmount))
+            throw new RuntimeException("Minimum bet is " + MINIMUM_BET + " dollar");
     }
 
     @Override
@@ -36,4 +38,12 @@ public class SlotMachine extends Bet {
 
     @Override
     public void decreaseBet(double value) {}
+
+    private boolean haveCredit(double totalBetAmount, double totalCreditUser) {
+        return totalCreditUser >= totalBetAmount;
+    }
+
+    private boolean totalBetAmountGreaterOrEqualThenMinimum(double totalBetAmount) {
+        return totalBetAmount >= MINIMUM_BET;
+    }
 }

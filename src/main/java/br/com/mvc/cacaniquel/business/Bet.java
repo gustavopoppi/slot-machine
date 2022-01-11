@@ -40,7 +40,7 @@ public abstract class Bet {
 
     public abstract void verifyIfWon(Bet bet);
 
-    public abstract boolean validateBet(Credit credit, double valueBet, int multiplier);
+    public abstract void validateBet(Credit credit, double valueBet, int multiplier);
 
     public abstract void raiseBet(double value);
 
