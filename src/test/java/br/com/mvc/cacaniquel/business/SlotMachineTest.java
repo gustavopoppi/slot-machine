@@ -1,46 +1,66 @@
 package br.com.mvc.cacaniquel.business;
 
-import br.com.mvc.cacaniquel.model.Credit;
+import br.com.mvc.cacaniquel.model.SlotMachineModel;
+import br.com.mvc.cacaniquel.repository.CreditRepository;
+import br.com.mvc.cacaniquel.repository.SlotMachineRepository;
 import br.com.mvc.cacaniquel.repository.UserRepository;
-import br.com.mvc.cacaniquel.support.CreditSupport;
-import br.com.mvc.cacaniquel.support.UserSupport;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
+
+import javax.transaction.Transactional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@SpringBootTest
 public class SlotMachineTest {
 
     @Autowired
     UserRepository userRepository;
 
-    @Test
-    public void doABet(){
-        Credit credit = CreditSupport.newCredit(UserSupport.newUser());
-        SlotMachine slotMachine = new SlotMachine(credit);
-        slotMachine.bet(10.00, 1);
+    @Autowired
+    CreditRepository creditRepository;
 
-        Assertions.assertEquals(10.00, slotMachine.getValueBet());
-        Assertions.assertEquals(1, slotMachine.getMultiplier());
+    @Autowired
+    SlotMachineRepository slotMachineRepository;
+
+    @Test
+    @Transactional
+    public void doABet(){
+        final int sizeBetDataBase = slotMachineRepository.findAll().size();
+
+        SlotMachineModel slotMachineModel = new SlotMachineModel();
+        slotMachineModel.setBetValue(10.00);
+        slotMachineModel.setMultiplier(1);
+        slotMachineModel.setUser(userRepository.findByUsername("carlos"));
+
+        new SlotMachine().bet(slotMachineModel, creditRepository, slotMachineRepository);
+        Assertions.assertEquals(sizeBetDataBase + 1, slotMachineRepository.findAll().size(), "Should have create one more bet data");
     }
 
     @Test
+    @Transactional
     public void insufficientFundsInYourBalance(){
-        Credit credit = CreditSupport.newCredit(UserSupport.newUser());
-        SlotMachine slotMachine = new SlotMachine(credit);
+        SlotMachineModel slotMachineModel = new SlotMachineModel();
+        slotMachineModel.setBetValue(1000.00);
+        slotMachineModel.setMultiplier(1);
+        slotMachineModel.setUser(userRepository.findByUsername("carlos"));
 
-        Throwable exception = assertThrows(RuntimeException.class, () -> slotMachine.bet(1000.00, 1));
+        Throwable exception = assertThrows(RuntimeException.class, () -> new SlotMachine().bet(slotMachineModel, creditRepository, slotMachineRepository));
         assertEquals("Insufficient funds in you balance", exception.getMessage());
     }
 
     @Test
     public void totalBetAmountLesserThenMinimumAllowed(){
-        Credit credit = CreditSupport.newCredit(UserSupport.newUser());
-        SlotMachine slotMachine = new SlotMachine(credit);
+        SlotMachineModel slotMachineModel = new SlotMachineModel();
+        slotMachineModel.setBetValue(0.5);
+        slotMachineModel.setMultiplier(1);
+        slotMachineModel.setUser(userRepository.findByUsername("carlos"));
 
-        Throwable exception = assertThrows(RuntimeException.class, () -> slotMachine.bet(0.5, 1));
+        Throwable exception = assertThrows(RuntimeException.class, () -> new SlotMachine().bet(slotMachineModel, creditRepository, slotMachineRepository));
         assertEquals("Minimum bet is 1.0 dollar", exception.getMessage());
     }
 }

@@ -1,23 +1,27 @@
 package br.com.mvc.cacaniquel.business;
 
 import br.com.mvc.cacaniquel.model.Credit;
+import br.com.mvc.cacaniquel.model.SlotMachineModel;
+import br.com.mvc.cacaniquel.model.User;
+import br.com.mvc.cacaniquel.repository.CreditRepository;
+import br.com.mvc.cacaniquel.repository.SlotMachineRepository;
 
 public abstract class Bet {
 
-    private double valueBet;
+    private double betValue;
     private int multiplier;
-    private Credit credit;
+    private User user;
 
-    public Bet(Credit credit) {
-        this.credit = credit;
+//    public SlotMachineModel(Credit credit) {
+//        this.credit = credit;
+//    }
+
+    public double getBetValue() {
+        return betValue;
     }
 
-    public double getValueBet() {
-        return valueBet;
-    }
-
-    public void setValueBet(double valueBet) {
-        this.valueBet = valueBet;
+    public void setBetValue(double betValue) {
+        this.betValue = betValue;
     }
 
     public int getMultiplier() {
@@ -28,19 +32,19 @@ public abstract class Bet {
         this.multiplier = multiplier;
     }
 
-    public Credit getCredit() {
-        return credit;
+    public User getUser() {
+        return user;
     }
 
-    public void setCredit(Credit credit) {
-        this.credit = credit;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public abstract void bet(double valueBet, int multiplier);
+public abstract void bet(SlotMachineModel bet, CreditRepository creditRepository, SlotMachineRepository slotMachineRepository);
 
     public abstract void verifyIfWon(Bet bet);
 
-    public abstract void validateBet(Credit credit, double valueBet, int multiplier);
+    public abstract void validateBet(double valueBet, int multiplier, double totalCreditUser);
 
     public abstract void raiseBet(double value);
 
