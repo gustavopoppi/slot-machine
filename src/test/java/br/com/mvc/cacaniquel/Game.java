@@ -27,7 +27,7 @@ public class Game {
 
     @Test
     void betWithoutMultiplier(){
-        SlotMachine slotMachine = new SlotMachine();
-        slotMachine.bet(10.00, 1);
+//        SlotMachine slotMachine = new SlotMachine();
+//        slotMachine.bet(10.00, 1);
     }
 }
