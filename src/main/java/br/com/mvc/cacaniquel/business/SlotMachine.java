@@ -19,9 +19,7 @@ public class SlotMachine extends Bet {
 
     @Override
     public void bet(SlotMachineModel bet, CreditRepository creditRepository, SlotMachineRepository slotMachineRepository) {
-//        validateBet(this.getCredit(), valueBet, multiplier);
         final double totalCreditUser = creditRepository.findByUser(bet.getUser()).getCreditValue();
-
         validateBet(bet.getBetValue(), bet.getMultiplier(), totalCreditUser);
 
         slotMachineRepository.save(bet);

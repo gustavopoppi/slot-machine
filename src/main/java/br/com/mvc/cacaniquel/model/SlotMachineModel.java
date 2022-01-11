@@ -1,6 +1,7 @@
 package br.com.mvc.cacaniquel.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "bet")
@@ -11,8 +12,9 @@ public class SlotMachineModel {
     private Long id;
     private double betValue;
     private int multiplier;
+    private LocalDate date;
 
-    @OneToOne/*(fetch = FetchType.LAZY)*/
+    @OneToOne
     private User user;
 
     public Long getId() {
@@ -45,5 +47,13 @@ public class SlotMachineModel {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 }

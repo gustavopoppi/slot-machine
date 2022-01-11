@@ -8,7 +8,7 @@
 			<div class="card mb-3" style="height: 78.45vh; margin: auto; width: 70%; border: solid 1px black;">	
 				<div class="m-5">
 					<div class="flex float-start border border-dark p-3 text-center" style="width:8em">inicio</div>
-					<div class="flex float-end border border-dark p-3 text-center" style="width:8em">final</div>
+					<div class="flex float-end border border-dark p-3 text-center" style="width:8em">Credits</div>
 				</div>
 
 
@@ -18,6 +18,22 @@
 					<div class="col-4 text-center border border-dark" style="padding: 18px; margin: 80px auto 40px auto; height: 10em;width: 10em;">R$ 10</div>
 					<div class="col-4 text-center border border-dark" style="padding: 18px; margin: 80px auto 40px auto; height: 10em;width: 10em;">R$ 10</div>
 				</div>
+
+				<form class="card-body" th:action="@{/slotMachine/bet}" th:object="${slotMachineDto}" method="POST">
+					<div class="m-5">
+						<div class="flex float-start border border-dark p-2 text-center rounded" style="width:8em">
+							<label for="betValue"></label>
+							<input type="betValue" name="betValue" class="form-control" placeholder="Bet Value"/>
+						</div>
+						<div class="flex float-start border border-dark p-2 text-center form-group rounded" style="width:8em">
+							<label for="multiplier"></label>
+							<input type="multiplier" name="multiplier" class="form-control" placeholder="Multiplier"/>	
+						</div>
+						<div class="flex float-end text-center" style="width:8em">
+							<button class="btn btn-primary" type="submit">Jogar</button>
+						</div>
+					</div>
+				</form>
 			</div>
 		</div>
 	</body>
