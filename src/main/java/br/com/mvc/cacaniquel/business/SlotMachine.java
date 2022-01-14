@@ -6,7 +6,10 @@ import br.com.mvc.cacaniquel.repository.SlotMachineRepository;
 import br.com.mvc.cacaniquel.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class SlotMachine extends Bet {
+import java.security.SecureRandom;
+import java.util.ArrayList;
+
+public class SlotMachine extends Game {
 
     @Autowired
     UserRepository userRepository;
@@ -26,7 +29,9 @@ public class SlotMachine extends Bet {
     }
 
     @Override
-    public void verifyIfWon(Bet bet) {}
+    public void verifyIfWon(Game bet) {}
+        ArrayList<Integer> randomNumbers = generateRandomNumbers(3);
+
 
     @Override
     public void validateBet(double betValue, int multiplier, double totalCreditUser) {
@@ -51,5 +56,15 @@ public class SlotMachine extends Bet {
 
     private boolean totalBetAmountGreaterOrEqualThenMinimum(double totalBetAmount) {
         return totalBetAmount >= MINIMUM_BET;
+    }
+
+    public ArrayList<Integer> generateRandomNumbers(int howManyNumbersGenerate) {
+        ArrayList<Integer> randomValues = new ArrayList<>();
+        SecureRandom randomNumbers = new SecureRandom();
+
+        for (int i = 0; i < howManyNumbersGenerate; i++)
+            randomValues.add(1 + randomNumbers.nextInt(10));
+
+        return randomValues;
     }
 }

@@ -13,6 +13,7 @@ public class SlotMachineModel {
     private double betValue;
     private int multiplier;
     private LocalDate date;
+    private double totalBet;
 
     @OneToOne
     private User user;
@@ -55,5 +56,13 @@ public class SlotMachineModel {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public double getTotalBet() {
+        return totalBet;
+    }
+
+    public void setTotalBet(double totalBet) {
+        this.totalBet = totalBet;
     }
 }

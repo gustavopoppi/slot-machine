@@ -9,9 +9,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 
 import javax.transaction.Transactional;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -57,5 +58,8 @@ public class SlotMachineTest {
         assertEquals("Minimum bet is 1.0 dollar", exception.getMessage());
     }
 
-
+    @Test
+    public void generateThreeRandomNumbers(){
+        Assertions.assertEquals(3, new SlotMachine().generateRandomNumbers(3).size(), "Size should have be three");
+    }
 }

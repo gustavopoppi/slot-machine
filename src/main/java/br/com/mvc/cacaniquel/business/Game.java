@@ -1,12 +1,11 @@
 package br.com.mvc.cacaniquel.business;
 
-import br.com.mvc.cacaniquel.model.Credit;
 import br.com.mvc.cacaniquel.model.SlotMachineModel;
 import br.com.mvc.cacaniquel.model.User;
 import br.com.mvc.cacaniquel.repository.CreditRepository;
 import br.com.mvc.cacaniquel.repository.SlotMachineRepository;
 
-public abstract class Bet {
+public abstract class Game {
 
     private double betValue;
     private int multiplier;
@@ -42,7 +41,7 @@ public abstract class Bet {
 
 public abstract void bet(SlotMachineModel bet, CreditRepository creditRepository, SlotMachineRepository slotMachineRepository);
 
-    public abstract void verifyIfWon(Bet bet);
+    public abstract void verifyIfWon(Game bet);
 
     public abstract void validateBet(double valueBet, int multiplier, double totalCreditUser);
 
