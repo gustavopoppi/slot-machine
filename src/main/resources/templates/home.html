@@ -8,17 +8,99 @@
 			<div class="card mb-3" style="height: 78.45vh; margin: auto; width: 70%; border: solid 1px black;">	
 				<div class="m-5">
 					<div class="flex float-start border border-dark p-3 text-center" style="width:8em">inicio</div>
-					<div class="flex float-end border border-dark p-3 text-center" style="width:8em">final</div>
+					<div class="flex float-end border border-dark p-3 text-center" style="width:8em">Credits</div>
 				</div>
 
+				<form class="card-body" id="slotMachineDto" th:action="@{/slotMachine/bet}" th:object="${slotMachineDto}" method="POST">
 
-				<!-- //TODO GUSTAVO colocar no css #nomeId ou .nomeClass > div consigo pegar todas dentro dela e não ficar copiando tudo para cada uma -->
-				<div class="d-flex justify-content-evenly ">
-					<div class="col-4 text-center border border-dark" style="padding: 18px; margin: 80px auto 40px auto; height: 10em;width: 10em;">R$ 10</div>
-					<div class="col-4 text-center border border-dark" style="padding: 18px; margin: 80px auto 40px auto; height: 10em;width: 10em;">R$ 10</div>
-					<div class="col-4 text-center border border-dark" style="padding: 18px; margin: 80px auto 40px auto; height: 10em;width: 10em;">R$ 10</div>
-				</div>
+					<div id="isWin" class="text-center" hidden>teste</div>
+					<!-- //TODO GUSTAVO colocar no css #nomeId ou .nomeClass > div consigo pegar todas dentro dela e não ficar copiando tudo para cada uma -->
+					<div class="d-flex justify-content-evenly ">
+						<div id="number1" class="col-4 text-center border border-dark" style="padding: 18px; margin: 80px auto 40px auto; height: 10em;width: 10em;">{{gameDto.randomNumbers[0]}}</div>
+						<div id="number2" class="col-4 text-center border border-dark" style="padding: 18px; margin: 80px auto 40px auto; height: 10em;width: 10em;">{{gameDto.randomNumbers[1]}}</div>
+						<div id="number3" class="col-4 text-center border border-dark" style="padding: 18px; margin: 80px auto 40px auto; height: 10em;width: 10em;">{{gameDto.randomNumbers[2]}}</div>
+					</div>
+				
+					<div class="m-5">
+						<div class="flex float-start border border-dark p-2 text-center rounded" style="width:8em">
+							<label for="betValue"></label>
+							<input type="betValue" name="betValue" class="form-control" placeholder="Bet Value"/>
+						</div>
+						<div class="flex float-start border border-dark p-2 text-center form-group rounded" style="width:8em">													
+							<label for="multiplier">Multiplier</label>
+								<select name="multiplier" id="multiplier">
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+								</select>
+						</div>
+						<div class="flex float-end text-center" style="width:8em">
+							<button class="btn btn-primary" type="submit">Jogar</button>
+							<button type="button" v-on:click="getSlotMachineDtoFunction()"
+								class="btn btn-outline-secondary my-sm-0">Cancelar</button>
+						</div>
+					</div>
+
+				</form>
 			</div>
 		</div>
+
+		<script type="text/javascript">
+			window.addEventListener("load", onLoad);
+
+			function onLoad() {
+				var app = new Vue({
+					el: '#slotMachineDto',
+					data: {
+						gameDto:[]
+					},
+					mounted() {
+						console.log("entrou no mounted")					
+						axios
+							.get('http://localhost:8080/api/initialRandomNumbers')
+							.then(response => {
+								this.gameDto = response.data;
+							})					
+					},
+					methods: {
+						getSlotMachineDtoFunction: function() {
+							console.log("entrou no getSlotMachineDtoFunction")
+							axios
+								.get('http://localhost:8080/api/betSlotMachine')
+								.then(response => {
+									this.gameDto = response.data
+									setHiddenOrNot(this.gameDto.win)									
+								})
+						}
+					}
+				})
+			}
+
+			function setHiddenOrNot(win) {
+				console.log("entrou no setInitialNumbers")
+
+				let isWin = document.getElementById("isWin")
+				let classList = isWin.classList
+				if (win == true){
+					isWin.removeAttribute("hidden")
+					isWin.innerText = "Parabéns, você ganhou"
+					classList.add("alert")
+					classList.add("alert-success")
+				}else{
+					isWin.removeAttribute("hidden")
+					isWin.innerText = "Você perdeu"					
+					classList.add("alert")
+					classList.add("alert-danger")
+				}		
+				setTimeout(function(){
+					console.log("slepado")
+				}, 2000);
+				
+			}
+		</script>
 	</body>
+
+
 </html>

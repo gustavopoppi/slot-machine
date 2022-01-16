@@ -3,9 +3,7 @@ package br.com.mvc.cacaniquel.controller;
 import java.security.Principal;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import br.com.mvc.cacaniquel.dto.SlotMachineDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 public class HomeController {
 
 	@GetMapping
-	public String home() {
+	public String home(Model model) {
+		model.addAttribute("slotMachine", new SlotMachineDto());
 
 		return "home";
 	}

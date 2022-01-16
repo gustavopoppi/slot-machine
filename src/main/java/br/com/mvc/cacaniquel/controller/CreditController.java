@@ -12,7 +12,7 @@ public class CreditController {
         slotMachine.newGame();
     }
 
-    private void updateCredit(Bet bet, double value) {
+    private void updateCredit(Game bet, double value) {
         if (bet.equals(BET))
             this.creditValue -= value;
 
