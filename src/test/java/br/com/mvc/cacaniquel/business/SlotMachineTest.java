@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.transaction.Transactional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -61,5 +62,19 @@ public class SlotMachineTest {
     @Test
     public void generateThreeRandomNumbers(){
         Assertions.assertEquals(3, new SlotMachine().generateRandomNumbers(3).size(), "Size should have be three");
+    }
+
+    @Test
+    public void gerenateThreeEqualsIntegerNumbersSoYouWin(){
+        ArrayList<Integer> equalNumbers = new ArrayList<>(Arrays.asList(1, 1, 1));
+
+        Assertions.assertTrue(new SlotMachine().verifyIfNumbersAreEquals(equalNumbers), "Should be true");
+    }
+
+    @Test
+    public void generateThreeDiferenteIntegerNumbersSoYouLose(){
+        ArrayList<Integer> equalNumbers = new ArrayList<>(Arrays.asList(1, 2, 1));
+
+        Assertions.assertFalse(new SlotMachine().verifyIfNumbersAreEquals(equalNumbers), "Should be false");
     }
 }

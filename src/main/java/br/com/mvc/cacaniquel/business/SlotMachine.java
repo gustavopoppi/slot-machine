@@ -29,9 +29,15 @@ public class SlotMachine extends Game {
     }
 
     @Override
-    public void verifyIfWon(Game bet) {}
-        ArrayList<Integer> randomNumbers = generateRandomNumbers(3);
-
+    public boolean verifyIfNumbersAreEquals(ArrayList<Integer> randomNumbers) {
+        int index = 0;
+        while (index != randomNumbers.size() - 1){
+            if (randomNumbers.get(index).compareTo(randomNumbers.get(index + 1)) != 0)
+                return false;
+            index++;
+        }
+        return true;
+    }
 
     @Override
     public void validateBet(double betValue, int multiplier, double totalCreditUser) {

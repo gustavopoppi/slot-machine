@@ -13,12 +13,12 @@
 
 				<form class="card-body" id="slotMachineDto" th:action="@{/slotMachine/bet}" th:object="${slotMachineDto}" method="POST">
 
-					<div class="text-center">teste</div>
+					<div id="isWin" class="text-center" hidden>teste</div>
 					<!-- //TODO GUSTAVO colocar no css #nomeId ou .nomeClass > div consigo pegar todas dentro dela e não ficar copiando tudo para cada uma -->
 					<div class="d-flex justify-content-evenly ">
-						<div class="col-4 text-center border border-dark" style="padding: 18px; margin: 80px auto 40px auto; height: 10em;width: 10em;">{{randomNumbers[0]}}</div>
-						<div class="col-4 text-center border border-dark" style="padding: 18px; margin: 80px auto 40px auto; height: 10em;width: 10em;">{{randomNumbers[1]}}</div>
-						<div class="col-4 text-center border border-dark" style="padding: 18px; margin: 80px auto 40px auto; height: 10em;width: 10em;">{{randomNumbers[2]}}</div>
+						<div id="number1" class="col-4 text-center border border-dark" style="padding: 18px; margin: 80px auto 40px auto; height: 10em;width: 10em;">{{gameDto.randomNumbers[0]}}</div>
+						<div id="number2" class="col-4 text-center border border-dark" style="padding: 18px; margin: 80px auto 40px auto; height: 10em;width: 10em;">{{gameDto.randomNumbers[1]}}</div>
+						<div id="number3" class="col-4 text-center border border-dark" style="padding: 18px; margin: 80px auto 40px auto; height: 10em;width: 10em;">{{gameDto.randomNumbers[2]}}</div>
 					</div>
 				
 					<div class="m-5">
@@ -38,12 +38,11 @@
 						</div>
 						<div class="flex float-end text-center" style="width:8em">
 							<button class="btn btn-primary" type="submit">Jogar</button>
-							<button type="button" v-on:click="getRandomNumbers()"
+							<button type="button" v-on:click="getSlotMachineDtoFunction()"
 								class="btn btn-outline-secondary my-sm-0">Cancelar</button>
 						</div>
 					</div>
 
-					valor: {{ randomNumbers[0] }}
 				</form>
 			</div>
 		</div>
@@ -55,24 +54,50 @@
 				var app = new Vue({
 					el: '#slotMachineDto',
 					data: {
-						randomNumbers:[]
+						gameDto:[]
 					},
 					mounted() {
-						console.log("mounted")
+						console.log("entrou no mounted")					
+						axios
+							.get('http://localhost:8080/api/initialRandomNumbers')
+							.then(response => {
+								this.gameDto = response.data;
+							})					
 					},
 					methods: {
-						getRandomNumbers: function() {
-							console.log("entrou no getRandomNumbers")
+						getSlotMachineDtoFunction: function() {
+							console.log("entrou no getSlotMachineDtoFunction")
 							axios
 								.get('http://localhost:8080/api/betSlotMachine')
 								.then(response => {
-									console.log("entrou no responde.data")
-									this.randomNumbers = response.data									
-									console.log("saiu do response.data")									
+									this.gameDto = response.data
+									setHiddenOrNot(this.gameDto.win)									
 								})
 						}
 					}
 				})
+			}
+
+			function setHiddenOrNot(win) {
+				console.log("entrou no setInitialNumbers")
+
+				let isWin = document.getElementById("isWin")
+				let classList = isWin.classList
+				if (win == true){
+					isWin.removeAttribute("hidden")
+					isWin.innerText = "Parabéns, você ganhou"
+					classList.add("alert")
+					classList.add("alert-success")
+				}else{
+					isWin.removeAttribute("hidden")
+					isWin.innerText = "Você perdeu"					
+					classList.add("alert")
+					classList.add("alert-danger")
+				}		
+				setTimeout(function(){
+					console.log("slepado")
+				}, 2000);
+				
 			}
 		</script>
 	</body>

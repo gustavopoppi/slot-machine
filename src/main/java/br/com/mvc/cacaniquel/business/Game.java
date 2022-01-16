@@ -5,6 +5,8 @@ import br.com.mvc.cacaniquel.model.User;
 import br.com.mvc.cacaniquel.repository.CreditRepository;
 import br.com.mvc.cacaniquel.repository.SlotMachineRepository;
 
+import java.util.ArrayList;
+
 public abstract class Game {
 
     private double betValue;
@@ -41,7 +43,7 @@ public abstract class Game {
 
 public abstract void bet(SlotMachineModel bet, CreditRepository creditRepository, SlotMachineRepository slotMachineRepository);
 
-    public abstract void verifyIfWon(Game bet);
+    public abstract boolean verifyIfNumbersAreEquals(ArrayList<Integer> randomNumbers);
 
     public abstract void validateBet(double valueBet, int multiplier, double totalCreditUser);
 
