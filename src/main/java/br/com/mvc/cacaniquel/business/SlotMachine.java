@@ -4,9 +4,11 @@ import br.com.mvc.cacaniquel.model.SlotMachineModel;
 import br.com.mvc.cacaniquel.repository.CreditRepository;
 import br.com.mvc.cacaniquel.repository.SlotMachineRepository;
 import br.com.mvc.cacaniquel.repository.UserRepository;
+import br.com.mvc.cacaniquel.support.SessionSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.security.SecureRandom;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class SlotMachine extends Game {
@@ -21,8 +23,11 @@ public class SlotMachine extends Game {
 //    }
 
     @Override
-    public void bet(SlotMachineModel bet, CreditRepository creditRepository, SlotMachineRepository slotMachineRepository) {
+    public void saveBet(SlotMachineModel bet, CreditRepository creditRepository, SlotMachineRepository slotMachineRepository) {
+        //TODO GUSTAVO totalCreditUser talvez eu possa fazer diferente, pois está faltando o relacionamento de mapped nas classes, igual aprendi no curso da pós
         final double totalCreditUser = creditRepository.findByUser(bet.getUser()).getCreditValue();
+
+        //TODO GUSTAVO talvez aqui fazer um try catch
         validateBet(bet.getBetValue(), bet.getMultiplier(), totalCreditUser);
 
         slotMachineRepository.save(bet);
@@ -72,5 +77,19 @@ public class SlotMachine extends Game {
             randomValues.add(1 + randomNumbers.nextInt(10));
 
         return randomValues;
+    }
+
+    public SlotMachineModel newSlotMachineBet(double betValue, Integer multiplier, UserRepository userRepository) {
+        String userName = SessionSupport.getAuthentication().getName();
+        final double totalBet = betValue * multiplier;
+
+        SlotMachineModel slotMachineModel = new SlotMachineModel();
+        slotMachineModel.setBetValue(betValue);
+        slotMachineModel.setMultiplier(multiplier);
+        slotMachineModel.setDate(LocalDate.now());
+        slotMachineModel.setTotalBet(totalBet);
+        slotMachineModel.setUser(userRepository.findByUsername(userName));
+
+        return slotMachineModel;
     }
 }

@@ -37,7 +37,7 @@ public class SlotMachineTest {
 
         SlotMachineModel slotMachineModel = SlotMachineSupport.newSlotMachineModel(10.00, 1, userRepository);
 
-        new SlotMachine().bet(slotMachineModel, creditRepository, slotMachineRepository);
+        new SlotMachine().saveBet(slotMachineModel, creditRepository, slotMachineRepository);
         Assertions.assertEquals(sizeBetDataBase + 1, slotMachineRepository.findAll().size(), "Should have create one more bet data");
     }
 
@@ -46,7 +46,7 @@ public class SlotMachineTest {
     public void insufficientFundsInYourBalance(){
         SlotMachineModel slotMachineModel = SlotMachineSupport.newSlotMachineModel(1000.00, 1 , userRepository);
 
-        Throwable exception = assertThrows(RuntimeException.class, () -> new SlotMachine().bet(slotMachineModel, creditRepository, slotMachineRepository));
+        Throwable exception = assertThrows(RuntimeException.class, () -> new SlotMachine().saveBet(slotMachineModel, creditRepository, slotMachineRepository));
         assertEquals("Insufficient funds in you balance", exception.getMessage());
     }
 
@@ -55,7 +55,7 @@ public class SlotMachineTest {
     public void totalBetAmountLesserThenMinimumAllowed(){
         SlotMachineModel slotMachineModel = SlotMachineSupport.newSlotMachineModel(0.5, 1, userRepository);
 
-        Throwable exception = assertThrows(RuntimeException.class, () -> new SlotMachine().bet(slotMachineModel, creditRepository, slotMachineRepository));
+        Throwable exception = assertThrows(RuntimeException.class, () -> new SlotMachine().saveBet(slotMachineModel, creditRepository, slotMachineRepository));
         assertEquals("Minimum bet is 1.0 dollar", exception.getMessage());
     }
 

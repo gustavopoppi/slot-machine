@@ -41,7 +41,7 @@ public abstract class Game {
         this.user = user;
     }
 
-public abstract void bet(SlotMachineModel bet, CreditRepository creditRepository, SlotMachineRepository slotMachineRepository);
+public abstract void saveBet(SlotMachineModel bet, CreditRepository creditRepository, SlotMachineRepository slotMachineRepository);
 
     public abstract boolean verifyIfNumbersAreEquals(ArrayList<Integer> randomNumbers);
 
