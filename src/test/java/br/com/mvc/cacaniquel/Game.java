@@ -1,6 +1,5 @@
 package br.com.mvc.cacaniquel;
 
-import br.com.mvc.cacaniquel.business.SlotMachine;
 import org.junit.jupiter.api.Test;
 
 
@@ -27,7 +26,7 @@ public class Game {
 
     @Test
     void betWithoutMultiplier(){
-//        SlotMachine slotMachine = new SlotMachine();
+//        SlotMachineBusiness slotMachine = new SlotMachineBusiness();
 //        slotMachine.bet(10.00, 1);
     }
 }

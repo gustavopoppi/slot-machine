@@ -1,6 +1,6 @@
 package br.com.mvc.cacaniquel.business;
 
-import br.com.mvc.cacaniquel.model.SlotMachineModel;
+import br.com.mvc.cacaniquel.model.BetModel;
 import br.com.mvc.cacaniquel.model.User;
 import br.com.mvc.cacaniquel.repository.CreditRepository;
 import br.com.mvc.cacaniquel.repository.SlotMachineRepository;
@@ -13,7 +13,7 @@ public abstract class Game {
     private int multiplier;
     private User user;
 
-//    public SlotMachineModel(Credit credit) {
+//    public BetModel(Credit credit) {
 //        this.credit = credit;
 //    }
 
@@ -41,7 +41,7 @@ public abstract class Game {
         this.user = user;
     }
 
-public abstract void saveBet(SlotMachineModel bet, CreditRepository creditRepository, SlotMachineRepository slotMachineRepository);
+    public abstract void saveBet(BetModel bet, CreditRepository creditRepository, SlotMachineRepository slotMachineRepository);
 
     public abstract boolean verifyIfNumbersAreEquals(ArrayList<Integer> randomNumbers);
 

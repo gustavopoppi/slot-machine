@@ -8,7 +8,7 @@ public class CreditController {
 
         updateCredit(BET, betValue);
 
-        SlotMachine slotMachine = new SlotMachine();
+        SlotMachineBusiness slotMachine = new SlotMachineBusiness();
         slotMachine.newGame();
     }
 

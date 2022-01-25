@@ -8,6 +8,7 @@ public class SlotMachineDto {
     private int multiplier;
     private boolean win;
     private ArrayList<Integer> randomNumbers;
+    private double credit;
 
     public double getBetValue() {
         return betValue;
@@ -25,7 +26,7 @@ public class SlotMachineDto {
         this.multiplier = multiplier;
     }
 
-    public boolean isWin() {
+    public boolean getWin() {
         return win;
     }
 
@@ -39,5 +40,13 @@ public class SlotMachineDto {
 
     public void setRandomNumbers(ArrayList<Integer> randomNumbers) {
         this.randomNumbers = randomNumbers;
+    }
+
+    public double getCredit() {
+        return credit;
+    }
+
+    public void setCredit(double credit) {
+        this.credit = credit;
     }
 }

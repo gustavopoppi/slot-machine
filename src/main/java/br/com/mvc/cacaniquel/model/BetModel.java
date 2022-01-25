@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "bet")
-public class SlotMachineModel {
+public class BetModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

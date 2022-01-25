@@ -5,20 +5,21 @@
 	
 		<div class="m-5">						
 			<!-- TODO GUSTAVO colocar esses class no css e style também o que der. -->
-			<div class="card mb-3" style="height: 78.45vh; margin: auto; width: 70%; border: solid 1px black;">	
+			<!--<div scope="row" th:text="${user.credit.creditValue}"></div>-->
+			<div class="card mb-3" style="height: 78.45vh; margin: auto; width: 70%; border: solid 1px black;">
 				<div class="m-5">
 					<div class="flex float-start border border-dark p-3 text-center" style="width:8em">inicio</div>
-					<div class="flex float-end border border-dark p-3 text-center" style="width:8em">Credits</div>
+					<div id="credits" class="flex float-end border border-dark p-3 text-center" th:text="'Credit: ' + ${user.credit.creditValue}"style="width:8em">Credit</div>
 				</div>
-				<!-- th:action="@{/slotMachine/bet}" -->
-				<form class="card-body" id="slotMachineDto" th:action="@{/slotMachine/bet}" th:object="${slotMachineDto}" method="POST">
+				<!-- th:action="@{/slotMachineBusiness/bet}" -->
+				<form class="card-body" id="slotMachineDto" th:action="@{/slotMachineBusiness/bet}" th:object="${slotMachineDto}" method="POST">
 
 					<p v-if="errors.length">
 						<b>Please fix the following errors:</b>
 						<ul>
 						  <li v-for="error in errors" class="text-danger">{{ error }}</li>
 						</ul>
-					  </p>
+				  	</p>
 
 					<div id="isWin" class="text-center" hidden>teste</div>
 					<!-- //TODO GUSTAVO colocar no css #nomeId ou .nomeClass > div consigo pegar todas dentro dela e não ficar copiando tudo para cada uma -->
@@ -69,9 +70,10 @@
 					mounted() {
 						console.log("entrou no mounted")					
 						axios
-							.get('http://localhost:8080/api/initialRandomNumbers')
+							.get('http://localhost:8080/api/initialVariables')
 							.then(response => {
 								this.gameDto = response.data;
+								console.log(this.gameDto)
 							})					
 					},
 					methods: {
@@ -83,12 +85,12 @@
 								this.errors.push('Invalid bet');
 								return
 							}	
-
 							axios
 								.get('http://localhost:8080/api/betSlotMachine' + '?betValue=' + this.betValue + '&multiplier=' + this.multiplier)
 								.then(response => {
 									this.gameDto = response.data
-									setWinOrDefeat(this.gameDto.win)									
+									setWinOrDefeat(this.gameDto.win)
+									updateCredit(this.gameDto.credit)
 								})
 						}
 					}
@@ -96,7 +98,7 @@
 			}
 
 			function setWinOrDefeat(win) {
-				console.log("entrou no setInitialNumbers")
+				console.log("entrou no setWinOrDefeat")
 
 				let isWin = document.getElementById("isWin")
 				let classList = isWin.classList
@@ -117,6 +119,11 @@
 				
 			}
 
+			function updateCredit(credit){
+				console.log("entrou no update credit")
+				console.log(credit)
+				document.getElementById("credits").innerText = "Credit: " + credit.toFixed(1)
+			}
 			
 			function teste() {
 				console.log("chamou o teste")

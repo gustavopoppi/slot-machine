@@ -10,7 +10,7 @@ public class Credit {
     private Long id;
     private double creditValue;
 
-    @OneToOne/*(fetch = FetchType.LAZY)*/
+    @OneToOne(optional = false)
     private User user;
 
     public Long getId() {
